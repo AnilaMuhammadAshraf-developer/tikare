@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "793383945798",
+    "project_id": "tikare-62061",
+    "storage_bucket": "tikare-62061.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793383945798:android:cf384582634d46d9946c47",
+        "android_client_info": {
+          "package_name": "com.example.tikare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2o3MEby8QaBRzwxa3xm-x-R4ITBNbIOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
