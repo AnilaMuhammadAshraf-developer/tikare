@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:tikare/services/firebase/push_notification.dart';
+import 'package:tikare/utils/helper/token_storage.dart';
 
 
 class MasterScreen extends StatefulWidget{
-  final String? fcmToken;
-  const MasterScreen({super.key, required this.fcmToken});
+  const MasterScreen({super.key});
   @override
   _MasterScreenState createState()=>_MasterScreenState();
 }
 class _MasterScreenState extends  State<MasterScreen>{
-
+  String? token;
+  Future<void> useToken() async{
+     String? savedToken=await TokenStorage.getToken();
+      setState(() {
+      token = savedToken;
+    });
+  }
+  @override 
+  void initState(){
+    super.initState();
+    useToken();
+  }
   @override
   Widget build(BuildContext context){
     return Scaffold(
        body:Center(
-        child:SelectableText('${widget.fcmToken ?? "No Token"}'),
+        child:token==null ? CircularProgressIndicator() :
+        SelectableText(token!),
        )
     );
   }

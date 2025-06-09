@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:tikare/utils/helper/token_storage.dart';
 
 class PushNotification {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -73,8 +74,13 @@ class PushNotification {
     );
   }
 
-  static Future<void> getDeviceToken() async{
+  static Future<String?> getDeviceToken() async{
        String? token = await _messaging.getToken();
       print("Device Token: $token");
+      
+      if(token!=null){
+        await TokenStorage.saveToken(token);
+      }
+      return token;
   }
 }

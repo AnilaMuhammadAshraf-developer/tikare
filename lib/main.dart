@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:tikare/firebase_options.dart';
-import 'package:tikare/screens/master.dart';
+import 'package:tikare/screens/splash.dart';
 import 'package:tikare/services/firebase/push_notification.dart';
+import 'package:tikare/utils/app_colors.dart';
 import 'package:tikare/utils/app_strings.dart';
 
 
@@ -22,10 +22,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: AppStrings.appTitle,
-      home: Scaffold(
-        body:Center(child:Text("Welcome"))
+      theme:ThemeData(
+        scaffoldBackgroundColor: AppColors.appMainColor
       ),
+      home: SplashScreen()
+      
     );
   }
 }
