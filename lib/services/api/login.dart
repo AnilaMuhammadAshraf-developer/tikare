@@ -6,7 +6,7 @@ import 'package:tikare/utils/helper..dart';
 
 
 class LoginService {
-  Future<UserModel?> loginByEmail(String email) async {
+  Future<Map<String,dynamic>> loginByEmail(String email) async {
      final String? deviceToken = await Helper.getToken();
     final String? deviceType = await Helper.getDeviceType();
     print("device type: $deviceType");
@@ -25,20 +25,9 @@ class LoginService {
       body:jsonEncode(body)
     );
        
-    if (response.statusCode == 200) {
-      print("this is response code: ${response.statusCode}");
-     final data = jsonDecode(response.body);
-    final userData = data['data']['user'];
-
-      if (userData != null) {
-        return UserModel.fromJson(userData);
-      } else {
-        return null;
-      }
-     
-      
-    } else {
-      throw Exception('Failed to login.');
-    }
+   
+        final data = jsonDecode(response.body);
+        return data;
+    
   }
 }

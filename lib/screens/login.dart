@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tikare/models/user_model.dart';
 import 'package:tikare/screens/master.dart';
+import 'package:tikare/screens/verify.dart';
 import 'package:tikare/services/api/login.dart';
 import 'package:tikare/utils/app_assets_path.dart';
 import 'package:tikare/utils/app_colors.dart';
@@ -13,44 +14,77 @@ import 'package:tikare/widgets/custom_container.dart';
 
 class LoginScreen extends StatelessWidget {
   final String? loginType;
-  final _formKey=GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   LoginScreen({super.key, required this.loginType});
   void _onEmailSubmit(BuildContext context) async {
     print("email submit method");
-    if(_formKey.currentState!.validate()){
-    try {
-      String email = _emailController.value.text;
-      UserModel? user = await LoginService().loginByEmail(email);
-      print('response :$user');
-      if (user != null) {
-        print("user_id: ${user.id}");
+    if (_formKey.currentState!.validate()) {
+      try {
+        String email = _emailController.value.text;
+        final response = await LoginService().loginByEmail(email);
+        print('response :$response');
+        if (response != null) {
+          print("message: ${response['message']}");
+
+          if (response['status'] == 1) {
+            
+            showDialog(
+              context: context,
+              barrierDismissible: false, // user can't tap outside to dismiss
+              builder:
+                  (context) => AlertDialog(
+                    title: Text("Success"),
+                    content: Text("${response['message']}"),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () => {
+                          Navigator.of(context).pop(),
+                          
+                        AppNavigation().pushReplacement(context, VerifyScreen())
+                        }
+                      ),
+                    ],
+                  ),
+            );
+
+           
+
+          } else {
+            showDialog(
+              context: context,
+              builder:
+                  (context) => AlertDialog(
+                    title: Text('Error'),
+                    content: Text(response['message']),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+            );
+          }
+        }
+      } catch (e) {
         showDialog(
           context: context,
-          barrierDismissible: false, // user can't tap outside to dismiss
           builder:
               (context) => AlertDialog(
-                title: Text("Login Successful"),
-                content: Text("Welcome, ${user.name}!"),
+                title: Text('Error'),
+                content: Text(e.toString()),
+                actions: [
+                  TextButton(
+                    child: Text('OK'),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
               ),
         );
-
-        // Wait for 2 seconds, then navigate
-        await Future.delayed(Duration(seconds: 2));
-
-        // Dismiss dialog and navigate to next screen
-        Navigator.of(context).pop(); // close dialog
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => MasterScreen()),
-        );
       }
-    } catch (e) {
-      print('$e');
-    }
-  }else{
-
-  }
+    } else {}
   }
 
   @override
@@ -88,12 +122,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   Form(
-                    key:_formKey,
+                    key: _formKey,
                     child: Column(
                       children: [
                         TextFormField(
                           controller: _emailController,
-                          validator:(value)=> AppValidations().isEmptyField(value,"Email"),
+                          validator:
+                              (value) =>
+                                  AppValidations().isEmptyField(value, "Email"),
                           decoration: InputDecoration(
                             hintText: "john@email.com",
                             filled: true,
@@ -105,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         CustomButton(
                           label: AppStrings.signIn,
-                          onSubmit:(context)=>_onEmailSubmit(context),
+                          onSubmit: (context) => _onEmailSubmit(context),
                         ),
                       ],
                     ),

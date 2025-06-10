@@ -9,4 +9,11 @@ class AppNavigation{
      Navigator.push(context,MaterialPageRoute(builder:(context)=>screen));
   }
 
+  void pushReplacement(BuildContext context,Widget screen){
+     Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => screen),
+        );
+  }
+
 }
