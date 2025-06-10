@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:tikare/utils/helper/token_storage.dart';
+import 'package:tikare/utils/helper..dart';
 
 class PushNotification {
   static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
@@ -9,39 +12,42 @@ class PushNotification {
 
   static Future<void> initialize() async {
     // iOS permissions
-  
-     NotificationSettings settings = await _messaging.requestPermission(
-        alert: true,
-        badge: true,
-        sound: true,
-   );
-  
+
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
     // 🔽 Add this block to initialize local notifications plugin
-  const AndroidInitializationSettings androidInitSettings =
-      AndroidInitializationSettings('@mipmap/ic_launcher'); // <-- your small icon
+    const AndroidInitializationSettings androidInitSettings =
+        AndroidInitializationSettings(
+          '@mipmap/ic_launcher',
+        ); // <-- your small icon
 
-  const InitializationSettings initSettings = InitializationSettings(
-    android: androidInitSettings,
-  );
+    const InitializationSettings initSettings = InitializationSettings(
+      android: androidInitSettings,
+    );
 
-  await _flutterLocalNotificationsPlugin.initialize(initSettings);
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-  
-    // Foreground notification
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      showLocalNotification(message);
-    });
+    await _flutterLocalNotificationsPlugin.initialize(initSettings);
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      // Foreground notification
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        showLocalNotification(message);
+      });
 
-    // When app is opened by tapping on notification
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      // Navigate or handle tap
-    });
+      // When app is opened by tapping on notification
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        // Navigate or handle tap
+      });
 
-    // Background messages
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  }else {
-    print("User declined or has not accepted permission");
-  }
+      // Background messages
+      FirebaseMessaging.onBackgroundMessage(
+        _firebaseMessagingBackgroundHandler,
+      );
+    } else {
+      print("User declined or has not accepted permission");
+    }
   }
 
   static Future<void> _firebaseMessagingBackgroundHandler(
@@ -51,9 +57,7 @@ class PushNotification {
     print("background push notifications");
   }
 
-
   static void showLocalNotification(RemoteMessage message) {
-    
     const AndroidNotificationDetails androidDetails =
         AndroidNotificationDetails(
           'channel_id',
@@ -74,13 +78,15 @@ class PushNotification {
     );
   }
 
-  static Future<String?> getDeviceToken() async{
-       String? token = await _messaging.getToken();
-      print("Device Token: $token");
-      
-      if(token!=null){
-        await TokenStorage.saveToken(token);
-      }
-      return token;
+  static Future<String?> getDeviceToken() async {
+    String? token = await _messaging.getToken();
+    print("Device Token: $token");
+
+    if (token != null) {
+      await Helper.saveToken(token);
+    }
+    return token;
   }
+
+ 
 }

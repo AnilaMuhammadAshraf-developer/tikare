@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tikare/services/firebase/push_notification.dart';
-import 'package:tikare/utils/helper/token_storage.dart';
+import 'package:tikare/utils/helper..dart';
 
 
 class MasterScreen extends StatefulWidget{
@@ -11,7 +11,7 @@ class MasterScreen extends StatefulWidget{
 class _MasterScreenState extends  State<MasterScreen>{
   String? token;
   Future<void> useToken() async{
-     String? savedToken=await TokenStorage.getToken();
+     String? savedToken=await Helper.getToken();
       setState(() {
       token = savedToken;
     });
