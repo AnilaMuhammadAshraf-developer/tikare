@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tikare/firebase_options.dart';
 import 'package:tikare/screens/splash.dart';
+import 'package:tikare/screens/verify.dart';
 import 'package:tikare/services/firebase/push_notification.dart';
 import 'package:tikare/utils/app_colors.dart';
 import 'package:tikare/utils/app_strings.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme:ThemeData(
         scaffoldBackgroundColor: AppColors.appMainColor
       ),
-      home: SplashScreen()
+      home: VerifyScreen()
       
     );
   }

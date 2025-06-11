@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tikare/models/user_model.dart';
-import 'package:tikare/screens/master.dart';
 import 'package:tikare/screens/verify.dart';
 import 'package:tikare/services/api/login.dart';
 import 'package:tikare/utils/app_assets_path.dart';
 import 'package:tikare/utils/app_colors.dart';
-import 'package:tikare/utils/app_font_style.dart';
 import 'package:tikare/utils/app_navigation.dart';
 import 'package:tikare/utils/app_strings.dart';
 import 'package:tikare/utils/app_validations.dart';

@@ -11,4 +11,9 @@ class AppStrings {
   static const String welcomeBack = "Welcome back!";
   static const String pleaseSigninToContinue = "Please Sign in to continue.";
   static const String signIn = "Sign in";
+  static const String oneTimePassword = "One Time Password";
+  static const String enterYourOtp = "Enter your OTP";
+   static const String continueBtnText = "Continue";
+   static const String didNotReceiveTheCode = "Didn't receive the code? ";
+   static const String resendText = "Resend";
 }
