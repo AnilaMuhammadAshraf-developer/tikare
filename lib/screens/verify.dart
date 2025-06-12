@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tikare/services/api/login.dart';
 import 'package:tikare/utils/app_assets_path.dart';
@@ -16,6 +19,10 @@ class VerifyScreen extends StatefulWidget {
 }
 
 class _VerifyScreenState extends State<VerifyScreen> {
+  int _secondsRemaining = 30;
+  Timer? _timer;
+  bool _canResend = false;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _otpController1 = TextEditingController();
   final TextEditingController _otpController2 = TextEditingController();
@@ -33,6 +40,39 @@ class _VerifyScreenState extends State<VerifyScreen> {
   final FocusNode _otpFocus6 = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    print("lkjkjkljkjkljkjkjkjkjkjkjkjk");
+    _canResend = false;
+    _secondsRemaining = 30;
+
+    _timer?.cancel();
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (_secondsRemaining > 0) {
+        setState(() {
+          _secondsRemaining--;
+        });
+      } else {
+        timer.cancel();
+        setState(() {
+          _canResend = true;
+        });
+      }
+    });
+  }
+
+  void _resendOtp() {
+    if (_canResend) {
+      print('OTP Resent');
+      _startTimer();
+    }
+  }
+
+  @override
   void dispose() {
     _otpController1.dispose();
     _otpController2.dispose();
@@ -47,6 +87,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
     _otpFocus4.dispose();
     _otpFocus5.dispose();
     _otpFocus6.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -227,25 +268,52 @@ class _VerifyScreenState extends State<VerifyScreen> {
                       ],
                     ),
                   ),
-
-                 
+                ],
+              ),
+            ),
+            SizedBox(height: 50),
+            Center(
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: CircularProgressIndicator(
+                      value: _secondsRemaining / 30,
+                      strokeWidth: 4,
+                      backgroundColor: Colors.grey.shade300,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                  ),
+                  Text('$_secondsRemaining'),
                 ],
               ),
             ),
             Spacer(),
-             Padding(padding:EdgeInsets.only(bottom: 30),
-             child:Center(
-             child:RichText(text:TextSpan(
-                    text:AppStrings.didNotReceiveTheCode,style: TextStyle(color:AppColors.appBlackColor,),
-                    children:[
-                   
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: AppStrings.didNotReceiveTheCode,
+                    style: TextStyle(color: AppColors.appBlackColor),
+                    children: [
                       TextSpan(
-                        text:AppStrings.resendText,style:TextStyle(color:AppColors.appBlackColor,fontWeight: FontWeight.bold,decoration:TextDecoration.underline)
-                      )
+                        text: AppStrings.resendText,
+                        style: TextStyle(
+                          color: _canResend ? AppColors.appBlackColor : AppColors.appGreyColor,
+                          fontWeight: FontWeight.bold,
+                          decoration: _canResend ? TextDecoration.underline : TextDecoration.none,
+                        ),
+                        recognizer:_canResend ? (TapGestureRecognizer()  
+                              ..onTap =_resendOtp) : null
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
-                    ]
-             ),
-             ),)
               // child:Row(
               //   mainAxisAlignment: MainAxisAlignment.center,
               //   children: [
@@ -254,9 +322,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
               //      Text(AppStrings.resendText,style:AppFontStyle.underLineBoldText)
               //   ],
               // ),
-             
-             ),
-           
+            ),
           ],
         ),
       ),
