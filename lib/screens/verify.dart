@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:tikare/screens/complete_profile.dart';
 import 'package:tikare/services/api/login.dart';
 import 'package:tikare/utils/app_assets_path.dart';
 import 'package:tikare/utils/app_colors.dart';
@@ -46,7 +47,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   }
 
   void _startTimer() {
-    print("lkjkjkljkjkljkjkjkjkjkjkjkjk");
+    print("timer.");
     _canResend = false;
     _secondsRemaining = 30;
 
@@ -90,7 +91,29 @@ class _VerifyScreenState extends State<VerifyScreen> {
     _timer?.cancel();
     super.dispose();
   }
+ 
+ void _otpVerified(BuildContext context) async{
+    print("otp verified!");
+    showDialog(
+              context: context,
+              barrierDismissible: false, // user can't tap outside to dismiss
+              builder:
+                  (context) => AlertDialog(
+                    title: Text("Success"),
+                    content: Text(AppStrings.otpVerifiedSuccessfullyMessage),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () => {
+                          Navigator.of(context).pop(),
 
+                        AppNavigation().pushReplacement(context, CompleteProfileScreen())
+                        }
+                      ),
+                    ],
+                  ),
+            );
+ }
   // void _onOtpSubmit(BuildContext context) async {
   //   print("otp submit method");
   //   if (_formKey.currentState!.validate()) {
@@ -263,7 +286,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
                         SizedBox(height: 10),
                         CustomButton(
                           label: AppStrings.continueBtnText,
-                          onSubmit: (context) => (context) {},
+                          onSubmit: (context) => _otpVerified(context),
                         ),
                       ],
                     ),

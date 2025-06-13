@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tikare/screens/complete_profile.dart';
 import 'package:tikare/screens/content.dart';
 import 'package:tikare/screens/login.dart';
 import 'package:tikare/services/api/content.dart';
@@ -62,6 +63,30 @@ class _PreLoginScreenState extends State<PreloginScreen> {
     print("this is type $loginType");
     if (loginType == "Email" || loginType == "Phone") {
         AppNavigation().pushTo(context, LoginScreen(loginType: loginType));
+    }else{
+      showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder:
+                  (context) => AlertDialog(
+                    title: Text("Success"),
+                    content: Text(AppStrings.loginSuccessfullyMessage),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed:
+                            () => {
+                              Navigator.of(context).pop(),
+
+                              AppNavigation().pushReplacement(
+                                context,
+                                CompleteProfileScreen(),
+                              ),
+                            },
+                      ),
+                    ],
+                  ),
+            );
     }
   }
 

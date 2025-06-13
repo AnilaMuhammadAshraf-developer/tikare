@@ -13,7 +13,16 @@ class AppStrings {
   static const String signIn = "Sign in";
   static const String oneTimePassword = "One Time Password";
   static const String enterYourOtp = "Enter your OTP";
-   static const String continueBtnText = "Continue";
-   static const String didNotReceiveTheCode = "Didn't receive the code? ";
-   static const String resendText = "Resend";
+  static const String continueBtnText = "Continue";
+  static const String didNotReceiveTheCode = "Didn't receive the code? ";
+  static const String resendText = "Resend";
+  static const String createProfileText = "Create Profile";
+  static const String otpEmailSendSuccessMessage =
+      "OTP verification code has been sent to your Email Address.";
+  static const String otpPhoneSendSuccessMessage =
+      "OTP verification code has been sent to your Phone Number.";
+  static const String otpVerifiedSuccessfullyMessage =
+      "Otp verified successfully.";
+  static const String loginSuccessfullyMessage = "Login Successfully.";
+  static const String dummyContentURL="https://baconipsum.com/api/?type=all-meat&paras=2&format=text";
 }

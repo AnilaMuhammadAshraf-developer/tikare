@@ -12,7 +12,7 @@ class ContentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title:type=='pp' ? Text(AppStrings.privacyPolicy) : Text(AppStrings.termsCondition) ),
       body: WebViewWidget(
-        controller: WebViewController()..loadRequest(Uri.parse(url)),
+        controller: WebViewController()..loadRequest(Uri.parse(AppStrings.dummyContentURL)),
       ),
     );
   }
