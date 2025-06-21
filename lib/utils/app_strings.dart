@@ -25,4 +25,5 @@ class AppStrings {
       "Otp verified successfully.";
   static const String loginSuccessfullyMessage = "Login Successfully.";
   static const String dummyContentURL="https://baconipsum.com/api/?type=all-meat&paras=2&format=text";
+  static const String profileSuccessfullyMessage = "Profile Completed Successfully.";
 }

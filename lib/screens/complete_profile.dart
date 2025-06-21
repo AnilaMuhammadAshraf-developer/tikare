@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tikare/screens/master.dart';
 import 'package:tikare/utils/app_assets_path.dart';
 import 'package:tikare/utils/app_colors.dart';
 import 'package:tikare/utils/app_navigation.dart';
@@ -86,14 +87,14 @@ void _handleCompleteProfile(BuildContext context){
               builder:
                   (context) => AlertDialog(
                     title: Text("Success"),
-                    content: Text(AppStrings.otpVerifiedSuccessfullyMessage),
+                    content: Text(AppStrings.profileSuccessfullyMessage),
                     actions: [
                       TextButton(
                         child: Text('OK'),
                         onPressed: () => {
                           Navigator.of(context).pop(),
 
-                        AppNavigation().pushReplacement(context, CompleteProfileScreen())
+                        AppNavigation().pushReplacement(context, MasterScreen())
                         }
                       ),
                     ],
@@ -125,16 +126,14 @@ void _handleCompleteProfile(BuildContext context){
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: SafeArea(
-    child:SingleChildScrollView(
-      child:Padding(
-        padding:EdgeInsets.only(bottom: 16),
+      body:SingleChildScrollView(
+     
         child: CustomContainer(
-          margin: 16,
+      
+          margin: 10,
           child: Form(
             key: _formKeyCompleteProfile,
-            child: SizedBox (
-              height:MediaQuery.of(context).size.height,
+             child:Expanded(
              child:Column(
               children: [
                 Stack(
@@ -147,19 +146,19 @@ void _handleCompleteProfile(BuildContext context){
                         border: Border.all(color: Colors.blue, width: 4.0),
                       ),
                       child: CircleAvatar(
-                        radius: 60,
-
+                        radius: 10,
+                     
                         backgroundImage:
                             _imageFile != null
                                 ? FileImage(_imageFile!)
-                                : AssetImage(AppAssetsPath.appLogo)
+                                : AssetImage(AppAssetsPath.appDefault)
                                     as ImageProvider,
                       ),
                     ),
 
                     Positioned(
                       bottom: 0,
-                      right: 0,
+                     right: 0,
                       child: InkWell(
                         onTap: _pickImage,
                         child: CircleAvatar(
@@ -171,8 +170,8 @@ void _handleCompleteProfile(BuildContext context){
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
-
+                SizedBox(height: 5),
+             
                 customTextFormField(
                   'First Name',
                   'First Name',
@@ -182,7 +181,7 @@ void _handleCompleteProfile(BuildContext context){
                   _firstNameController,
                   30,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 customTextFormField(
                   'Last Name',
                   'Last Name',
@@ -192,7 +191,7 @@ void _handleCompleteProfile(BuildContext context){
                   _lastNameController,
                   30,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 customTextFormField(
                   'Email',
                   'john@gmail.com',
@@ -202,7 +201,7 @@ void _handleCompleteProfile(BuildContext context){
                   _emailController,
                   30,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 customTextFormField(
                   'Phone Number',
                   '+123-456-789',
@@ -212,7 +211,7 @@ void _handleCompleteProfile(BuildContext context){
                   _phoneController,
                   30,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 customTextFormField(
                   'Location',
                   'Location',
@@ -225,29 +224,31 @@ void _handleCompleteProfile(BuildContext context){
                   _locationController,
                   255,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 5),
                 customTextFormField(
                   'Bio',
                   'Bio',
                   null,
                   null,
-                  EdgeInsets.symmetric(vertical: 30.0, horizontal: 12.0),
+                  EdgeInsets.symmetric(vertical: 19.0, horizontal: 12.0),
                   _bioController,
                   255,
                 ),
-                SizedBox(height:20),
+                SizedBox(height:7),
                 CustomButton(label:AppStrings.continueBtnText, onSubmit:(context)=>_handleCompleteProfile(context)),
-                 SizedBox(height:30),
+                SizedBox.shrink()
+              
               
               ],
             ),
           ),
+            ),
           ),
-        ),
-      ),
+        
+      
     ),
-      ),
-    );
+      );
+    
   }
 
   Widget customTextFormField(
@@ -268,6 +269,7 @@ void _handleCompleteProfile(BuildContext context){
         hintText: hintText,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
+        errorMaxLines: 1,
         border: OutlineInputBorder(),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.appBlueColor),
@@ -279,4 +281,7 @@ void _handleCompleteProfile(BuildContext context){
       ),
     );
   }
+
+
+
 }

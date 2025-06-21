@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:tikare/screens/home.dart';
 import 'package:tikare/utils/helper..dart';
+import 'package:tikare/widgets/custom_appbar.dart';
 
-
-class MasterScreen extends StatefulWidget{
+class MasterScreen extends StatefulWidget {
   const MasterScreen({super.key});
   @override
-  _MasterScreenState createState()=>_MasterScreenState();
+  _MasterScreenState createState() => _MasterScreenState();
 }
-class _MasterScreenState extends  State<MasterScreen>{
+
+class _MasterScreenState extends State<MasterScreen> {
+  int currentIndex=0;
   String? token;
-  Future<void> useToken() async{
-     String? savedToken=await Helper.getToken();
-      setState(() {
-      token = savedToken;
-    });
-  }
-  @override 
-  void initState(){
-    super.initState();
-    useToken();
-  }
+  final List<Map<String, dynamic>> _pages = [
+    {'title': 'Home', 'screen': HomeScreen(), 'icon': Icon(Icons.home)},
+    {'title': 'My Bookings', 'screen': HomeScreen(), 'icon': Icon(Icons.book)},
+    {'title': 'Chats', 'screen': HomeScreen(), 'icon': Icon(Icons.chat)},
+    {
+      'title': 'My Services',
+      'screen': HomeScreen(),
+      'icon': Icon(Icons.design_services_sharp),
+    },
+    {'title': 'My Profile', 'screen': HomeScreen(), 'icon': Icon(Icons.person)},
+  ];
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-       body:Center(
-        child:token==null ? CircularProgressIndicator() :
-        SelectableText(token!),
-       )
+      appBar: CustomAppbar(title:_pages[currentIndex]['title']),
+      body: _pages[currentIndex]['screen']
     );
   }
 }
