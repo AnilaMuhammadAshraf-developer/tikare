@@ -34,7 +34,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget{
             color:AppColors.appWhiteColor,
              borderRadius: BorderRadius.circular(10)
           ),
-          child:Icon(Icons.notifications,color:AppColors.appTextFieldColor)
+          child:Icon(Icons.notifications_none_outlined,color:AppColors.appTextFieldColor)
         )),)
       
       ]
