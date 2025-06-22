@@ -9,10 +9,11 @@ class ContentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("type:$type");
     return Scaffold(
       appBar: AppBar(title:type=='pp' ? Text(AppStrings.privacyPolicy) : Text(AppStrings.termsCondition) ),
       body: WebViewWidget(
-        controller: WebViewController()..loadRequest(Uri.parse(AppStrings.dummyContentURL)),
+        controller: WebViewController()..loadRequest(Uri.parse(url)),
       ),
     );
   }

@@ -92,7 +92,8 @@ class _PreLoginScreenState extends State<PreloginScreen> {
 
   void _content(type) async {
     try {
-      String url = await ContentService().getContentUrl(type);
+      // String url = await ContentService().getContentUrl(type);
+      String url="https://httpbin.org/html";
       AppNavigation().pushTo(context, ContentScreen(url: url, type: type));
     } catch (e) {
       print("Error: $e");

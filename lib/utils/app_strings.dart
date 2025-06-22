@@ -26,4 +26,7 @@ class AppStrings {
   static const String loginSuccessfullyMessage = "Login Successfully.";
   static const String dummyContentURL="https://baconipsum.com/api/?type=all-meat&paras=2&format=text";
   static const String profileSuccessfullyMessage = "Profile Completed Successfully.";
+  static const String userName="Liam Smith";
+  static const String userEmail="liam.smith@gmail.com";
+  static const String logout="Log Out";
 }

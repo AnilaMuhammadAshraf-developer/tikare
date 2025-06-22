@@ -10,19 +10,22 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget{
       backgroundColor: AppColors.appBlueColor,
       title:Text(title,style:TextStyle(color:AppColors.appBlackColor)),
       centerTitle: true,
-      leading: Padding(
+      leading: Builder(builder:(context)=>
+      Padding(
         padding: EdgeInsets.all(10.0),
-    
+       
         child:Container(
        
          decoration: BoxDecoration(
             color:AppColors.appWhiteColor,
             borderRadius: BorderRadius.circular(10)
           ),
-        child:Icon(Icons.sort_sharp,color: AppColors.appTextFieldColor,)
+        child:IconButton(icon:Icon(Icons.sort_sharp,color: AppColors.appTextFieldColor,),onPressed: Scaffold.of(context).openDrawer,)
       ),
         
       ),
+      ),
+      
       actions:[
         Padding(padding: EdgeInsets.all(10.0),
         
