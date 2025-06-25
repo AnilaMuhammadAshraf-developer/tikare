@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tikare/screens/splash.dart';
 import 'package:tikare/utils/app_assets_path.dart';
 import 'package:tikare/utils/app_colors.dart';
+import 'package:tikare/utils/app_navigation.dart';
 import 'package:tikare/utils/app_strings.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -24,24 +26,25 @@ class CustomDrawer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
 
             children: [
-           
               Align(
-                  alignment: Alignment.topRight,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppColors.appBlackColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child:IconButton(onPressed: (){
-                          print("close the drawer ");
-                          Navigator.pop(context);
-                      }, icon: Icon(Icons.close, color: AppColors.appWhiteColor)) ,
-                    ),
+                alignment: Alignment.topRight,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.appBlackColor,
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                
-              
+                  child: IconButton(
+                    onPressed: () {
+                      print("close the drawer ");
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.close, color: AppColors.appWhiteColor),
+                  ),
+                ),
+              ),
+
               Transform.translate(
                 offset: Offset(0, -31),
                 child: Column(
@@ -81,7 +84,12 @@ class CustomDrawer extends StatelessWidget {
                                   color: AppColors.appBlackColor,
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                print(
+                                  "drawer selected function ${page['screen']}",
+                                );
+                                AppNavigation().pushTo(context, page['screen']);
+                              },
                             );
                           }).toList(),
                     ).toList(),
@@ -91,6 +99,30 @@ class CustomDrawer extends StatelessWidget {
               InkWell(
                 onTap: () {
                   print("yes");
+                  showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder:
+                  (context) => AlertDialog(
+                    title: Text("Success"),
+                    content: Text("Logout Successfully."),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed:
+                            () => {
+                              Navigator.of(context).pop(),
+
+                                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => SplashScreen()),
+                    (Route<dynamic> route) => false,
+                  )
+                            },
+                      ),
+                  
+                    ],
+                  ),
+                  );
                 },
                 child: Align(
                   alignment: Alignment.bottomLeft,

@@ -29,4 +29,7 @@ class AppStrings {
   static const String userName="Liam Smith";
   static const String userEmail="liam.smith@gmail.com";
   static const String logout="Log Out";
+  static const String inCommingRequest="Incoming Request";
+  static const String acceptText="Accept";
+  static const String rejectText="Reject";
 }
